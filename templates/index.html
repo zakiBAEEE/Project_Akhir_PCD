@@ -3,16 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Automatic Number Recognition</title>
+    <title>{% if fileGambar %}Upload Success{% else %}Automatic Number Recognition{% endif %}</title>
     <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
-    <h1>Automatic Number Recognition</h1>
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <input type="file" id="imageUpload" name="image" accept="image/*" onchange="previewImage(event)">
-        <img id="preview" src="#" alt="Preview" style="display: none; max-width: 300px; max-height: 300px;">
-        <button type="submit">Upload</button>
-    </form>
-    <script src="./../static/javascript/script.js"></script>
+    {% if fileGambar %}
+        <h1>Upload Success</h1>
+        <p>Berhasil di uplod</p>
+    {% else %}
+        <h1>Automatic Number Recognition</h1>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" id="imageUpload" name="image" accept="image/*" onchange="previewImage(event)">
+            <img id="preview" src="#" alt="Preview" style="display: none; max-width: 300px; max-height: 300px;">
+            <button type="submit">Upload</button>
+        </form>
+        <script src="./../static/javascript/script.js"></script>
+    {% endif %}
 </body>
 </html>
