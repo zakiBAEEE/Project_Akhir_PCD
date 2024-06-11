@@ -43,4 +43,4 @@ def process_image(image_path):
     reader = easyocr.Reader(['en'])
     result = reader.readtext(cropped_image)
 
-    return result
+    return [(bbox, text, prob) for bbox, text, prob in result]

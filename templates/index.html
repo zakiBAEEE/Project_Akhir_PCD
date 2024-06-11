@@ -8,8 +8,14 @@
 </head>
 <body>
     {% if fileGambar %}
-        <h1>Upload Success</h1>
-        <p>Berhasil di uplod</p>
+    <h1>Upload Success</h1>
+    <p>Berhasil di upload</p>
+    <p>Hasil:</p>
+    <ul>
+        {% for item in result %}
+            <li>{{ item[1] }} (Confidence: {{ item[2] }})</li>
+        {% endfor %}
+    </ul>
     {% else %}
         <h1>Automatic Number Recognition</h1>
         <form action="/upload" method="post" enctype="multipart/form-data">

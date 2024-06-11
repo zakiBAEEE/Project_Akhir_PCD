@@ -10,8 +10,14 @@ def index():
 
 @app.route('/upload', methods=['GET','POST'] )
 def upload():
+ result = None
  file = request.files.get('image')
- return render_template('index.html', fileGambar=file)
+ if file:
+    file_path = f"./static/images/{file.filename}"
+    file.save(file_path)
+    result = process_image(file_path)
+    return render_template('index.html', fileGambar=file, hasil=result)
+ return render_template('index.html', fileGambar=file, hasil=result)
 
 if __name__ == '__main__':
     app.run(debug=True)
