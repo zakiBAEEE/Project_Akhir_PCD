@@ -1,3 +1,4 @@
+
 import cv2
 import numpy as np
 import imutils
@@ -6,6 +7,8 @@ import easyocr
 def process_image(image_path):
     # Membaca gambar
     img = cv2.imread(image_path)
+    if img is None:
+        raise ValueError("Gambar tidak dapat dibaca. Pastikan jalur gambar benar.")
 
     # Konversi gambar ke grayscale
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -28,13 +31,18 @@ def process_image(image_path):
             location = approx
             break
 
+    if location is None:
+        raise ValueError("Tidak ada kontur yang ditemukan yang memiliki 4 titik sudut.")
+
     # Membuat masker dan menggambar kontur
     mask = np.zeros(gray.shape, np.uint8)
-    new_image = cv2.drawContours(mask, [location], 0, 255, -1)
-    new_image = cv2.bitwise_and(img, img, mask=mask)
+    cv2.drawContours(mask, [location], 0, 255, -1)
 
-    # Memotong area yang ditemukan
+    # Memastikan mask tidak kosong sebelum melakukan operasi min dan max
     (x, y) = np.where(mask == 255)
+    if x.size == 0 or y.size == 0:
+        raise ValueError("Mask tidak memiliki area yang sesuai. Tidak ada kontur yang valid ditemukan.")
+
     (x1, y1) = (np.min(x), np.min(y))
     (x2, y2) = (np.max(x), np.max(y))
     cropped_image = gray[x1:x2+1, y1:y2+1]
@@ -43,4 +51,6 @@ def process_image(image_path):
     reader = easyocr.Reader(['en'])
     result = reader.readtext(cropped_image)
 
-    return [(bbox, text, prob) for bbox, text, prob in result]
+    # Mengambil hanya teks dari plat nomor
+    text = result[0][-2]
+    return text
