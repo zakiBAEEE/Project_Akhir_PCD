@@ -83,7 +83,7 @@ def process_image(filepath):
         cropped_image = gray[x1:x2+1, y1:y2+1]
 
         reader = easyocr.Reader(['en'])
-        # result = reader.readtext(cropped_image)
+        result = reader.readtext(cropped_image)
 
         hasil = [["dummy", "result"]]
         return hasil
