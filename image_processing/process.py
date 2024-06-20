@@ -39,7 +39,7 @@ def process_image(filepath):
 
   plt.imshow(cv2.cvtColor(cropped_image, cv2.COLOR_BGR2RGB))
 
-  reader = easyocr.Reader(['en'])
-  result = "reader.readtext(cropped_image)"
+  reader = easyocr.Reader(['en'], gpu=True)
+  result = reader.readtext(cropped_image)
 
   return result
