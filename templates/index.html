@@ -5,6 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Automatic Number Recognition</title>
     <link rel="stylesheet" href="../static/css/style.css">
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 20px;
+}
+
+h1 {
+    color: #333;
+}
+
+button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+input[type="file"] {
+    margin: 20px 0;
+}
+
+#preview {
+    margin-top: 20px;
+}
+
+.back-button {
+    margin-top: 20px;
+    background-color: #28a745;
+}
+
+.back-button:hover {
+    background-color: #218838;
+}
+
+    </style>
 </head>
 <body>
     {% if fileGambar %}
@@ -12,8 +56,9 @@
     <p>Berhasil di upload</p>
     <p>Hasil:</p>
     <ul>
-        <li>{{ result[0][-2] }}</li>
+        <li>{{ result }}</li>
     </ul>
+    <button onclick="location.href='/'" class="back-button">Kembali</button>
     {% else %}
     <h1>Automatic Number Recognition</h1>
     <form action="/upload" method="post" enctype="multipart/form-data">
